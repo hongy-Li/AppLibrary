@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 
 /**
- * Created by lenovo on 2017/2/21.
+ * Created by lhy on 2017/2/21.
  */
-public class BasePresenter implements IViewStatus{
+public class BasePresenter implements IViewStatus {
     private IPresenterNotify mNotifyListener;
 
     protected BasePresenter(IPresenterNotify notifyListener) {
@@ -50,6 +50,6 @@ public class BasePresenter implements IViewStatus{
 
     @Override
     public void sendNotifyMessage(NotifyMessage message) {
-
+        mNotifyListener.notify(message);
     }
 }

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 /**
- * Created by chirenjie on 2016/10/27.
+ * Created by lhy on 2017/2/21.
  */
 public interface IViewStatus {
     void onCreate(Context context, Bundle savedInstanceState);

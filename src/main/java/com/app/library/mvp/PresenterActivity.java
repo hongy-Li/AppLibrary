@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.app.library.base.BaseActivity;
 
 /**
- * Created by lhy on 2017/2/20
+ * Created by lhy on 2017/2/21.
  */
 public abstract class PresenterActivity<T extends BasePresenter> extends BaseActivity implements IPresenterNotify {
     protected T mPresenter;
