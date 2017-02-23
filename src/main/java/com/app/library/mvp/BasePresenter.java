@@ -9,7 +9,7 @@ import android.os.Bundle;
 public class BasePresenter implements IViewStatus {
     private IPresenterNotify mNotifyListener;
 
-    protected BasePresenter(IPresenterNotify notifyListener) {
+    public BasePresenter(IPresenterNotify notifyListener) {
         this.mNotifyListener = notifyListener;
     }
 

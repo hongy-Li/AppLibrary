@@ -9,6 +9,7 @@ import com.app.library.base.BaseActivity;
  */
 public abstract class PresenterActivity<T extends BasePresenter> extends BaseActivity implements IPresenterNotify {
     protected T mPresenter;
+    protected final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
