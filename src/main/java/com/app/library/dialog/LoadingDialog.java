@@ -15,10 +15,10 @@ import com.app.library.R;
 /**
  * Created by lhy on 2017/2/24
  */
-public class LodingDialog extends BaseDialog {
+public class LoadingDialog implements IDialog {
     Dialog loadingDialog;
 
-    public LodingDialog(Context context) {
+    public LoadingDialog(Context context) {
         init(context);
     }
 
@@ -46,6 +46,10 @@ public class LodingDialog extends BaseDialog {
         window.setAttributes(lp);
 //        window.setWindowAnimations(R.style.PopWindowAnimStyle);
 
+    }
+
+    public boolean isShowing() {
+        return loadingDialog == null ? false : loadingDialog.isShowing();
     }
 
     @Override
