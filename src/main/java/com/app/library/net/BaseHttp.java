@@ -12,13 +12,14 @@ import java.util.Map;
  */
 public abstract class BaseHttp<T extends IHttpListener> {
     protected static final int HTTP_GET = 1000;
+    protected static final int HTTP_POST = 1001;
     public T mListener;
 
     public BaseHttp(T listener) {
         mListener = listener;
     }
 
-    protected void sendRequest(boolean isDialogShow, final IDialog dialog, String url, Map<String, Object> params, int method) {
+    protected void sendRequest(boolean isDialogShow, final IDialog dialog, String url, Map<String, Object> params, int method) throws Exception {
         if (isDialogShow && dialog != null) {
             dialog.show();
         }
@@ -27,8 +28,25 @@ public abstract class BaseHttp<T extends IHttpListener> {
             case HTTP_GET:
                 get(net, url, params);
                 break;
+            case HTTP_POST:
+                post(net, url, params);
+                break;
         }
 
+    }
+
+    private void post(BaseNet net, String url, Map<String, Object> params) throws Exception {
+        net.postHttp(url, params, new IRequestListener() {
+            @Override
+            public void onSucceed(String msg) {
+                succeedRequest(msg);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                failedRequest(e);
+            }
+        });
     }
 
     private void get(BaseNet net, String url, Map<String, Object> params) {
