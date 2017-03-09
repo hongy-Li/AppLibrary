@@ -63,13 +63,13 @@ public class L {
 
     public static void i(String tag, String msg) {
         if (isDebug) {
+//            tag = tag + "/" + Thread.currentThread().getName();
             Log.i(tag, msg);
             if (sIsSave) {
                 writeLog(msg, sFileName);
             }
         }
     }
-
 
 
     private static void writeLog(String content, String name) {

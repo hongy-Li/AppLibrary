@@ -11,15 +11,15 @@ import java.util.Map;
  * Created by lhy on 2017/2/7
  */
 public abstract class BaseHttp<T extends IHttpListener> {
-    protected static final int HTTP_GET = 1000;
-    protected static final int HTTP_POST = 1001;
+    protected static final String HTTP_GET = "GET";
+    protected static final String HTTP_POST = "POST";
     public T mListener;
 
     public BaseHttp(T listener) {
         mListener = listener;
     }
 
-    protected void sendRequest(boolean isDialogShow, final IDialog dialog, String url, Map<String, Object> params, int method) throws Exception {
+    protected void sendRequest(boolean isDialogShow, final IDialog dialog, String url, Map<String, Object> params, String method) throws Exception {
         if (isDialogShow && dialog != null) {
             dialog.show();
         }
