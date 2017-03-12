@@ -1,6 +1,7 @@
 package com.app.library.utils.log;
 
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 
 
@@ -20,7 +21,7 @@ public class L {
 
     private static boolean isDebug = true;
     private static boolean sIsSave = true;
-    private static String sFileName = "default";
+    private static String sFileName = "";
     private static String sFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
 
     public static void setIsDebug(boolean isDebug) {
@@ -29,26 +30,33 @@ public class L {
 
     public static void init(boolean isSave, String path, String name) {
         sIsSave = isSave;
-        sFileName = name;
         sFilePath = path;
+        if (!TextUtils.isEmpty(name)) {
+            sFileName = name;
+        }
+    }
+
+    public static void init(boolean isSave, String path) {
+        init(isSave, path, "");
     }
 
     /**
      * 线程队列
      */
-    private static ConcurrentLinkedQueue<LogInfo> logQueue = new ConcurrentLinkedQueue<LogInfo>();
+    private final static ConcurrentLinkedQueue<LogInfo> logQueue = new ConcurrentLinkedQueue<>();
 
     /**
      * 获取消息队列
      */
-    public synchronized static ConcurrentLinkedQueue<LogInfo> getLogQueue() {
+    public final synchronized static ConcurrentLinkedQueue<LogInfo> getLogQueue() {
         return logQueue;
     }
 
     /**
      * 记录日志信息
      *
-     * @param
+     * @param content  日志内容
+     * @param fileName 文件名
      */
     private static synchronized void addLog(String content, String fileName) {
         logQueue.add(new LogInfo(content, fileName));
@@ -61,8 +69,15 @@ public class L {
      * 以级别为 i 的形式输出LOG
      */
 
+    public static void i(String msg) {
+        StackTraceElement caller = getCallerStackTraceElement();
+        String tag = generateTag(caller);//自动生成TAG
+        i(tag, msg);
+    }
+
     public static void i(String tag, String msg) {
         if (isDebug) {
+            msg = Thread.currentThread().getName() + "/" + msg;
             Log.i(tag, msg);
             if (sIsSave) {
                 writeLog(msg, sFileName);
@@ -71,22 +86,20 @@ public class L {
     }
 
 
-
     private static void writeLog(String content, String name) {
         DateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss SSS", Locale.CHINESE);
         String time = formatter.format(new Date());
-        String result = time + "->" + content + "\r\n";// 日志文本
+        String result = time + "->" + content + "\r\n";// 日志文本  加上记录日志的时间
         addLog(result, name);
     }
 
     synchronized static void writeFile(String content, String name) {
         DateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss SSS", Locale.CHINESE);
-        DateFormat dateformat = new SimpleDateFormat("yyyyMMdd", Locale.CHINESE);
         try {
             String time = formatter.format(new Date());
-            String result = time + "  " + content + "\r\n";// 日志文本
-            String fileName = name + "_" + dateformat.format(new Date()) + ".txt";
+            String result = time + "  " + content + "\r\n";// 日志文本加上实际写入日志的时间
             String path = sFilePath;
+            String fileName = (TextUtils.isEmpty(name) ? new SimpleDateFormat("yyyyMMdd", Locale.CHINESE).format(new Date()) : "default") + ".txt";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 File dir = new File(path);
                 if (!dir.exists()) {
@@ -97,12 +110,10 @@ public class L {
                 fos.close();
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-
-    StackTraceElement caller = getCallerStackTraceElement();
-    String tag = generateTag(caller);//自动生成TAG
 
     private static StackTraceElement getCallerStackTraceElement() {
         return Thread.currentThread().getStackTrace()[4];
@@ -113,7 +124,7 @@ public class L {
         String callerClazzName = caller.getClassName();
         callerClazzName = callerClazzName.substring(callerClazzName
                 .lastIndexOf(".") + 1);
-        tag = String.format(tag, callerClazzName, caller.getMethodName(),
+        tag = String.format(Locale.CHINA, tag, callerClazzName, caller.getMethodName(),
                 caller.getLineNumber());
         return tag;
     }

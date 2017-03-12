@@ -14,7 +14,7 @@ public abstract class PresenterActivity<T extends BasePresenter> extends BaseAct
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = createPresenter();
+        this.mPresenter = createPresenter();
         mPresenter.onCreate(this, savedInstanceState);
     }
 
