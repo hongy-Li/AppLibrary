@@ -29,7 +29,7 @@ public class LoadingDialog implements IDialog {
                 .findViewById(R.id.dialog_loading_view);// 加载布局
         TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 提示文字
         tipTextView.setText("加载中");// 设置加载信息
-        loadingDialog = new Dialog(context, R.style.MyDialogStyle);// 创建自定义样式dialog
+        loadingDialog = new Dialog(context);// 创建自定义样式dialog
         loadingDialog.setCancelable(true); // 是否可以按“返回键”消失
         loadingDialog.setCanceledOnTouchOutside(false); // 点击加载框以外的区域
         loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
