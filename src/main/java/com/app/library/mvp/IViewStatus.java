@@ -9,4 +9,18 @@ import android.os.Bundle;
  */
 public interface IViewStatus {
     void sendNotifyMessage(NotifyMessage message);
+
+    void onCreate(Context context, Bundle savedInstanceState);
+
+    void onStart();
+
+    void onResume();
+
+    void onRestart();
+
+    void onPause();
+
+    void onStop();
+
+    void onDestroy();
 }

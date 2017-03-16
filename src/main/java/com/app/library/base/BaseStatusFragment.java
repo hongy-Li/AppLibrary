@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 /**
- * Created by lhy on 2017/3/4
+ * Created by lhy on 2017/3/13
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseStatusFragment extends Fragment {
     private View vg_root;
 
     @Nullable
@@ -26,18 +26,19 @@ public abstract class BaseFragment extends Fragment {
                 group.removeView(vg_root);
             }
         } else {
-            vg_root = inflater.inflate(getLayoutXML(), container, false);
+            vg_root = createView();
         }
         initView();
         initEvent();
         return vg_root;
     }
 
-    protected abstract int getLayoutXML();
+    protected abstract View createView();
 
     protected void initView() {
     }
 
     protected void initEvent() {
     }
+
 }

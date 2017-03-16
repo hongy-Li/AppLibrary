@@ -7,7 +7,7 @@ import com.app.library.base.BaseActivity;
 /**
  * Created by lhy on 2017/2/21.
  */
-public abstract class PresenterActivity<T extends ActivityPresenter> extends BaseActivity implements IPresenterNotify {
+public abstract class PresenterActivity<T extends BasePresenter> extends BaseActivity implements IPresenterNotify {
     protected T mPresenter;
     protected final String TAG = this.getClass().getSimpleName();
 

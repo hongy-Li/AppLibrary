@@ -36,7 +36,7 @@ public abstract class BaseHttp<T extends IHttpListener> {
     }
 
     private void post(BaseNet net, String url, Map<String, Object> params) throws Exception {
-        net.postHttp(url, params, new IRequestListener() {
+        net.postRequest(url, params, new IRequestListener() {
             @Override
             public void onSucceed(String msg) {
                 succeedRequest(msg);
@@ -50,7 +50,7 @@ public abstract class BaseHttp<T extends IHttpListener> {
     }
 
     private void get(BaseNet net, String url, Map<String, Object> params) {
-        net.getHttp(url, params, new IRequestListener() {
+        net.getRequest(url, params, new IRequestListener() {
             @Override
             public void onSucceed(String msg) {
                 succeedRequest(msg);
